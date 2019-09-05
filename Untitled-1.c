@@ -5,24 +5,30 @@ typedef {
     int down;
     int left;
     int right;
-}square;
+}node;
 
 int main(int argc, char* argv[]){
     node **maze;
-    int goalPos;
-    int startPos;
+    int goal_x;
+    int goal_y;
+    int ctr=0;
+    int intial_x=0;
+    int intial_y=0;
+    
+    allocator(goal_x,goal_y, ctr);
+    movement(intial_x, initial_y);
     int ctr=0;
 
     return 0;
 }
 
 
-int func(int i, int j, int ctr){
-    if (i==goal_x && j==goal_y)
-        return;
+int allocator(int i, int j, int ctr){
+    if (i==0 && j==0|| i==16&&j==16)
+        return 0;
     if(!maze[i][j].up && maze[i-1][j].val>ctr+1){
         maze[i-1][j].val=ctr+1;
-        func(i-1, j);
+        func(i-1, j, ctr+1);
     }
     if(!maze[i][j].down && maze[i+1][j].val>ctr+1){
         maze[i+1][j].val=ctr+1;
@@ -36,5 +42,27 @@ int func(int i, int j, int ctr){
         maze[i][j+1].val=ctr+1;
         func(i, j+1,ctr+1);
     }
-    return ;
+    return 1;
+}
+
+int movement(int x, int y){
+    if(maze[x][y].val==0)
+         return 0;
+    if(!maze[x][y].up && maze[x][y].val>maze[x-1][y].val){
+         moveup();
+         movement(x-1, y);
+    }
+    if(!maze[x][y].down && maze[x][y].val>maze[x+1][y].val){
+         movedown();
+         movement(x+1, y);
+    }
+    if(!maze[x][y].right && maze[x][y].val> maze[x][y+1].val){
+         moveright();
+         movement(x,y+1);
+    }
+    if(!maze[x][y].left && maze[x][y].val>maze[x][y-1]){
+         moveleft();
+         movement(x, y-1);
+    return 0;
+
 }
