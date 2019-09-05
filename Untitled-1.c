@@ -7,14 +7,17 @@ typedef {
     int right;
 }node;
 
+node **maze;
 int main(int argc, char* argv[]){
-    node **maze;
     int goal_x;
     int goal_y;
     int ctr=0;
     int intial_x=0;
     int intial_y=0;
     
+    for(int i=0;i<16;++i)
+        for(int j=0;j<16;++j)
+            maze[i][j].val=-1;
     allocator(goal_x,goal_y, ctr);
     movement(intial_x, initial_y);
     int ctr=0;
@@ -24,7 +27,7 @@ int main(int argc, char* argv[]){
 
 
 int allocator(int i, int j, int ctr){
-    if (i==0 && j==0|| i==16&&j==16)
+    if (i==0 && j==0|| i==16&&j==16|| maze[i][j] ==-1)
         return 0;
     if(!maze[i][j].up && maze[i-1][j].val>ctr+1){
         maze[i-1][j].val=ctr+1;
